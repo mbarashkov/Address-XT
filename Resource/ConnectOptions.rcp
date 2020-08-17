@@ -1,0 +1,72 @@
+#include "../Src/AddressRsc.h"
+#include "ENU.rcp"
+
+
+FORM ID ConnectOptionsDialog AT (2 2 156 156)
+FRAME
+MODAL
+SAVEBEHIND
+USABLE
+HELPID ConnectOptionsDialog
+DEFAULTBTNID ConnectOptionsCancelButton
+BEGIN
+	TITLE "Settings"
+	BUTTON "OK" ID ConnectOptionsOKButton AT (5 139 AUTO 12) USABLE LEFTANCHOR FRAME
+	BUTTON "Cancel" ID ConnectOptionsCancelButton AT (PREVRIGHT+6 139 36 12) USABLE LEFTANCHOR FRAME
+	
+	LABEL "E-mail:" ID ConnectOptionsEmailLabel AT (5 71) USABLE FONT 1
+	LABEL "Dial:" ID ConnectOptionsDialLabel AT (17 34) NONUSABLE FONT 1
+	LABEL "SMS:" ID ConnectOptionsSMSLabel AT (14 50) USABLE FONT 1
+	LABEL "Map:" ID ConnectOptionsMapLabel AT (13 119) USABLE FONT 1
+	LABEL "Web:" ID ConnectOptionsWebLabel AT (12 87) USABLE FONT 1
+	LABEL "IM:" ID ConnectOptionsIMLabel AT (22 103) USABLE FONT 1
+
+	CHECKBOX "Number Prefix:" ID ConnectOptionsNumberPrefix AT (4 18 95 12) FONT 1 GROUP 0 USABLE LEFTANCHOR
+	FIELD ID ConnectOptionsNumberPrefixField AT (99 18 55 13)  USABLE EDITABLE UNDERLINED NUMERIC LEFTALIGN AUTOSHIFT MAXCHARS 31
+	
+	POPUPTRIGGER "" ID ConnectOptionsDialTrigger AT (40 34 17 12) NONUSABLE LEFTANCHOR
+	POPUPTRIGGER "" ID ConnectOptionsSMSTrigger AT (40 50 17 12) USABLE LEFTANCHOR
+	POPUPTRIGGER "" ID ConnectOptionsEmailTrigger AT (40 71 17 12) USABLE LEFTANCHOR
+	POPUPTRIGGER "" ID ConnectOptionsMapTrigger AT (40 119 17 12) USABLE LEFTANCHOR
+	POPUPTRIGGER "" ID ConnectOptionsWebTrigger AT (40 87 17 12) USABLE LEFTANCHOR
+	POPUPTRIGGER "" ID ConnectOptionsIMTrigger AT (40 103 17 12) USABLE LEFTANCHOR
+	
+	LIST "- None -" ID ConnectOptionsDialList AT (40 34 80 0) NONUSABLE
+	LIST "- None -" ID ConnectOptionsSMSList AT (40 50 80 0) NONUSABLE
+	LIST "- None -" ID ConnectOptionsEmailList AT (40 71 80 0) NONUSABLE
+	LIST "- None -" ID ConnectOptionsMapList AT (40 119 80 0) NONUSABLE
+	LIST "- None -" ID ConnectOptionsWebList AT (40 87 80 0) NONUSABLE
+	LIST "- None -" ID ConnectOptionsIMList AT (40 103 80 0) NONUSABLE
+	
+	POPUPLIST ID ConnectOptionsDialTrigger 	ConnectOptionsDialList
+	POPUPLIST ID ConnectOptionsSMSTrigger 	ConnectOptionsSMSList
+	POPUPLIST ID ConnectOptionsEmailTrigger ConnectOptionsEmailList
+	POPUPLIST ID ConnectOptionsMapTrigger 	ConnectOptionsMapList
+	POPUPLIST ID ConnectOptionsWebTrigger	ConnectOptionsWebList
+	POPUPLIST ID ConnectOptionsIMTrigger 	ConnectOptionsIMList
+	
+	GRAFFITISTATEINDICATOR AT (144 142)
+END
+
+STRING ID ConnectOptionsDialog 
+		"• Setting a Dial Prefix automatically adds the characters specified to the " \
+		"beginning of any dialed number. This feature can be used to add prefixes such " \
+		"as the international prefix, '+', required for some phone networks. The " \
+		"specified prefix will be added to all numbers except those that begin with " \
+		"'+' character\r\r" \
+		"• Applications that register with Quick Connect appear in the pick list. The " \
+		"selected application will be used to handle all related requests from Address XT" \
+		"\r\r• Selecting 'None' as the associated application will hide that option "\
+		"in the Quick Connect Dialog"
+/*NAVIGATION ID ConnectOptionsDialog
+  INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+    INITIALOBJECTID DialListList
+    JUMPOBJECTID DialListList
+    BOTTOMLEFTOBJECTID DialListDialButton
+    BEGIN
+      ID DialListList BELOW DialListNumberField
+      ID DialListNumberField BELOW DialListDialButton ABOVE DialListList
+      ID DialListDialButton ABOVE DialListNumberField
+      ID DialListSMSButton ABOVE DialListNumberField
+      ID DialListCancelButton ABOVE DialListNumberField
+    END*/

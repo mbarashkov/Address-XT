@@ -1,0 +1,65 @@
+#include "../Src/AddressRsc.h"
+#include "ENU.rcp"
+
+BITMAPFAMILYEX ID EditViewBusinessCardBmp
+BEGIN
+	BITMAP "bitmaps/BusinessCard/Single1.bmp" COMPRESS BPP 1 DENSITY 1 TRANSPARENTINDEX 0
+	BITMAP "bitmaps/BusinessCard/Single8.bmp" COMPRESS BPP 8 DENSITY 1 TRANSPARENT 0 255 0
+	BITMAP "bitmaps/BusinessCard/Double1.bmp" COMPRESS BPP 1 DENSITY 2 TRANSPARENTINDEX 0
+	BITMAP "bitmaps/BusinessCard/Double8.bmp" COMPRESS BPP 8 DENSITY 2 TRANSPARENT 0 255 0
+END
+
+FORM ID EditView AT (0 0 160 160)
+NOFRAME
+SAVEBEHIND
+USABLE
+MENUID 1200
+BEGIN
+	TITLE "Contact Edit"
+	FORMBITMAP AT (68 0) BITMAP EditViewBusinessCardBmp  NONUSABLE
+	SELECTORTRIGGER "" ID EditCategoryTrigger AT (158 1 1 11) RIGHTANCHOR
+	LIST "" ID EditCategoryList AT (86 1 72 0) NONUSABLE
+	TABLE ID EditTable AT (0 18 160 121) ROWS 50 COLUMNS 2 COLUMNWIDTHS  55 103
+	SELECTORTRIGGER " -Tap to add- " ID EditBirthdaySelector AT (72 48 44 12) NONUSABLE LEFTANCHOR
+	BUTTON "Done" ID EditDoneButton AT (1 147 35 12) USABLE LEFTANCHOR FRAME
+	BUTTON "Details..." ID EditDetailsButton AT (42 147 42 12) USABLE LEFTANCHOR FRAME
+	REPEATBUTTON "\x01" ID EditUpButton AT (147 144 13 8) FONT 5 NONUSABLE LEFTANCHOR NOFRAME
+	REPEATBUTTON "\x02" ID EditDownButton AT (147 152 13 8) FONT 5 NONUSABLE LEFTANCHOR NOFRAME
+	LIST "" ID EditPhoneList AT (1 1 36 0) NONUSABLE
+	LIST "" ID EditRingtoneList AT (1 1 54 0) NONUSABLE
+	GRAFFITISTATEINDICATOR AT (135 150)
+	BUTTON "Note" ID EditNoteButton AT (90 147 35 12) USABLE LEFTANCHOR FRAME
+	LIST"AIM""MSN""Yahoo""AOL ICQ""IM" ID EditIMList AT (1 1 36 22) NONUSABLE
+	LIST"Addr(W)""Addr(H)""Addr(O)" ID EditAddressList AT (1 1 40 33) NONUSABLE
+	SELECTORTRIGGER " -Tap to add- " ID EditAnnivSelector AT (72 48 44 12) NONUSABLE LEFTANCHOR
+	POPUPTRIGGER "" ID EditRingerTrigger AT (72 48 44 12) NONUSABLE LEFTANCHOR
+	//POPUPLIST ID EditRingerTrigger EditRingtoneList
+END
+
+HEX "fmap" ID 1000 // FieldMapID
+		0x00 0x01 0x0D 0x02 0x03 0x04 0x05 0x06 0x07 0x08 0x09 0x0A 0x0B 0x0C 0x0E 0x0F 
+		0x10 0x11 0x12 
+
+STRING ID AddressEditHelp
+		"•If your device has a 5-Way Navigator or 4-way Jog Dial, use the select butt" \
+		 "on to save contact and return to contacts list.\r\r•Tap \"Details...\" to en" \
+		 "ter contact's birthday.\r\r•To edit record links, select \"Record Links\" fr" \
+		 "om the Record menu.\r\r•Press \"Phone\" button on your Treo smartphone to op" \
+		 "en dial dialog for selected contact. Select a number with up and down button" \
+		 "s, and dial it by pressing \"Phone\" button again.\r\r•If your contact has a" \
+		 "n e-mail address and you have an compatible e-mail application installed, yo" \
+		 "u can quickly e-mail contact by selecting \"E-Mail To Contact''' from Record" \
+		 " menu."
+
+NAVIGATION ID EditView
+    INITIALSTATE kFrmNavHeaderFlagsObjectFocusStartState
+    INITIALOBJECTID EditTable
+    JUMPOBJECTID EditTable
+    BOTTOMLEFTOBJECTID EditDoneButton
+    BEGIN
+      ID EditCategoryList BELOW EditTable
+      ID EditTable BELOW EditDoneButton ABOVE EditCategoryList
+      ID EditDoneButton ABOVE EditTable
+      ID EditDetailsButton ABOVE EditTable
+      ID EditNoteButton ABOVE EditTable
+    END

@@ -1,0 +1,93 @@
+ќписание структуры баз PhoneFavoritesDB (Treo600) и PhoneFavorites2DB (Tre650)
+
+
+struct header {
+    // всегда 00
+    UInt8 reserved1; 
+    // номер €чейки в таблице favorites
+    // номер страницы - cell / 14
+    UInt8 cell;
+    // “ребовать, что-бы телефон был включен, если значение 80
+    // обычное значение - 00
+    UInt8 need_phone;
+    // «аблокировать возможность смены €чейки:
+    //  | 02 -- запретить смену типа записи (операции)
+    //  | 10 -- запретить смену hot-key
+    UInt8 locked;
+    // всегда 00
+    UInt8 reserved2;
+    // код операции (см. ниже)
+    UInt8 operation;
+    // всегда 00
+    UInt8 reserved3;
+    // код hot-key (если не установлен - 00)
+    Char hotkey;
+    // дальше данные завис€т от пол€ operation
+}
+
+ѕримечение:
+¬се строки выравниваютс€ до кратного количества байт:
+ "A \0" и "A A \0 \0"
+
+
+ƒопустимые операции (поле operation)
+
+00 -- App. launch
+      ƒанные:
+	Char *label;
+	UInt32 creatorid;
+	
+01 -- Speed Dial
+      ƒанные:
+	Char *name;
+	Char *phone;
+	Char *additional_digits;
+	// флаг 'использовать доп. цифры при наборе' 01 или 00
+	UInt8 use_adt;
+	// флаг 'custom alarm' -- 
+	// 00 если Default, 01 -- выбрана отдельна€ midi'ка
+	UInt8 custom_alarm;
+	// номер midi из системной базы? (дл€ default - 0xffffffff)
+	UInt32 midi_id;
+	// всегда 0xff
+	UInt8 reserved;
+	// дальше непон€тно - похоже запись дополн€етс€ до 8байт нул€ми
+
+	// на Treo600 есть возможновыть выбрать изображение, но
+	// на симул€торе его получить не удалось.
+    
+    // Ќа Treo650 возможен еще один вариант
+    // с установленными need_phone == 80, locked == 33, hotkey == 'e'
+    Voice Mail
+      ƒанные:
+	Char *label; // VoiceMail
+	Char *phone; // номер голосовой почты? 
+	// точно формат не €сен - на симул€торе не удаетс€ мен€ть
+ 
+
+02 -- —ообщение (sms)
+      ƒанные:
+	Char *label;
+	Char *to;
+
+03 -- URL (открываетс€ браузер)
+      ƒанные:
+	Char *label;
+	Char *url;
+
+// дальше - только дл€ Treo650 (PhoneFavorites2DB)
+07 -- email 
+      ƒанные:
+	Char *label;
+        Char *to;
+	
+08 -- «апуск системного приложени€
+      ƒанные:
+	Char *label;
+	// определ€ет что запускать:
+	// 00 00 -- Call log
+	// 00 01 -- Dial Pad
+	// 00 02 -- Contacts
+	UInt16 system_app;
+
+

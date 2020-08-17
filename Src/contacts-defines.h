@@ -1,0 +1,2 @@
+#define CONTACTS
+#define LIBDEBUG
